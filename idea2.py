@@ -23,7 +23,7 @@ def init_google_sheet():
     client = gspread.authorize(creds)
     
     try:
-        return client.open("Dati Partecipanti").sheet1
+        return client.open("Dati Partecipanti 2").sheet1
     except APIError:
         st.error("Errore di accesso al Google Sheet: verifica che il foglio esista e sia condiviso con l'account di servizio.")
         return None
