@@ -2,7 +2,6 @@ import streamlit as st
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import json
-import random
 from gspread.exceptions import APIError, GSpreadException
 from datetime import datetime
 import pandas as pd
@@ -32,14 +31,21 @@ if "sheet" not in st.session_state:
 def load_sheet_data(sheet):
     try:
         records = sheet.get_all_records()
-        return pd.DataFrame(records)
+        df = pd.DataFrame(records)
+        # Aggiunge una colonna timestamp se manca
+        if "timestamp" not in df.columns:
+            df["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        return df
     except GSpreadException:
         st.error("Errore nel caricamento dei dati. Controlla che le intestazioni nel foglio siano uniche.")
         try:
             rows = sheet.get_all_values()
             headers = rows[0]
             data = rows[1:]
-            return pd.DataFrame(data, columns=headers)
+            df = pd.DataFrame(data, columns=headers)
+            if "timestamp" not in df.columns:
+                df["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            return df
         except Exception as e:
             st.error("Errore nel caricamento dei dati dal Google Sheet.")
             return None
@@ -84,7 +90,15 @@ def lmsr_probability(yes_count, no_count, b=1):
 # Funzione per mostrare grafici collettivi per ciascun mercato (frasi target)
 def show_market_graphs(df):
     if df is not None and not df.empty:
-        df["timestamp"] = pd.to_datetime(df["timestamp"])
+        if "timestamp" not in df.columns:
+            st.error("La colonna 'timestamp' non è presente nei dati.")
+            return
+
+        try:
+            df["timestamp"] = pd.to_datetime(df["timestamp"])
+        except Exception as e:
+            st.error("Errore nella conversione della colonna 'timestamp'.")
+            return
         
         for phrase in target_phrases:
             phrase_text = phrase["frase"]
@@ -127,6 +141,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
