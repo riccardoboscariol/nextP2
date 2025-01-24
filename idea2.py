@@ -52,54 +52,49 @@ def load_sheet_data(sheet):
 
 # Definizione delle frasi target, controllo e di test
 target_phrases = [
-    {"frase": "Apple Inc. (AAPL): Il titolo in data 2025-05-13 sarà più basso rispetto alla data 2025-04-27.", "feedback": "Di questa frase non sappiamo se è vera o falsa"},
-    {"frase": "Microsoft Corp. (MSFT): Il titolo in data 2025-05-11 sarà più basso rispetto alla data 2025-05-12.", "feedback": "Di questa frase non sappiamo se è vera o falsa"},
-    {"frase": "Amazon.com Inc. (AMZN): Il titolo in data 2025-02-01 sarà più alto rispetto alla data 2025-01-28.", "feedback": "Di questa frase non sappiamo se è vera o falsa"}
+    {"frase": "On February 4, 2025, in the Coppa Italia football match Atalanta vs. Bologna, Atalanta will win the match.", "feedback": "Di questa frase non sappiamo se è vera o falsa"}
 ]
 
 control_phrases = [
-    {"frase": "Apple Inc. (AAPL): Il titolo in data 2025-04-27 sarà più basso rispetto alla data 2025-05-13.", "feedback": "Di questa frase non sappiamo se è vera o falsa"},
-    {"frase": "Microsoft Corp. (MSFT): Il titolo in data 2025-05-11 sarà più alto rispetto alla data 2025-05-15.", "feedback": "Di questa frase non sappiamo se è vera o falsa"},
-    {"frase": "Amazon.com Inc. (AMZN): Il titolo in data 2025-01-28 sarà più alto rispetto alla data 2025-02-01.", "feedback": "Di questa frase non sappiamo se è vera o falsa"}
+    {"frase": "On February 4, 2025, in the Coppa Italia football match Atalanta vs. Bologna, Atalanta will lose the match.", "feedback": "Di questa frase non sappiamo se è vera o falsa"}
 ]
 
-# Definizione delle frasi di test con 15 frasi vere e 15 frasi false
+# Definizione delle frasi di test con 30 frasi (15 vere e 15 false)
 test_phrases = [
     # Frasi di Test Vere
-    {"frase": "Apple Inc. (AAPL): Il titolo in data 2023-03-15 era più alto rispetto alla data 2023-03-10.", "corretta": True},
-    {"frase": "Microsoft Corp. (MSFT): Il titolo in data 2023-06-20 era più basso rispetto alla data 2023-06-21.", "corretta": True},
-    {"frase": "Amazon.com Inc. (AMZN): Il titolo in data 2022-12-01 era più basso rispetto alla data 2022-12-05.", "corretta": True},
-    {"frase": "Tesla Inc. (TSLA): Il titolo in data 2022-09-14 era più alto rispetto alla data 2022-09-12.", "corretta": True},
-    {"frase": "Alphabet Inc. (GOOGL): Il titolo in data 2023-02-20 era più alto rispetto alla data 2023-02-18.", "corretta": True},
-    {"frase": "Meta Platforms Inc. (META): Il titolo in data 2023-01-15 era più basso rispetto alla data 2023-01-18.", "corretta": True},
-    {"frase": "Apple Inc. (AAPL): Il titolo in data 2022-11-22 era più basso rispetto alla data 2022-11-25.", "corretta": True},
-    {"frase": "Microsoft Corp. (MSFT): Il titolo in data 2022-07-10 era più alto rispetto alla data 2022-07-08.", "corretta": True},
-    {"frase": "Amazon.com Inc. (AMZN): Il titolo in data 2023-04-12 era più basso rispetto alla data 2023-04-15.", "corretta": True},
-    {"frase": "Tesla Inc. (TSLA): Il titolo in data 2022-10-01 era più alto rispetto alla data 2022-09-28.", "corretta": True},
-    {"frase": "Alphabet Inc. (GOOGL): Il titolo in data 2022-08-30 era più basso rispetto alla data 2022-08-31.", "corretta": True},
-    {"frase": "Meta Platforms Inc. (META): Il titolo in data 2023-05-01 era più alto rispetto alla data 2023-04-28.", "corretta": True},
-    {"frase": "Apple Inc. (AAPL): Il titolo in data 2022-06-18 era più basso rispetto alla data 2022-06-20.", "corretta": True},
-    {"frase": "Microsoft Corp. (MSFT): Il titolo in data 2023-03-05 era più alto rispetto alla data 2023-03-03.", "corretta": True},
-    {"frase": "Amazon.com Inc. (AMZN): Il titolo in data 2022-11-30 era più basso rispetto alla data 2022-12-01.", "corretta": True},
+    {"frase": "Napoli won against Lazio on January 20, 2024.", "corretta": True},
+    {"frase": "Juventus won against Torino on January 5, 2023.", "corretta": True},
+    {"frase": "Inter won against Torino on January 20, 2024.", "corretta": True},
+    {"frase": "Manchester United won against Chelsea on December 30, 2023.", "corretta": True},
+    {"frase": "PSG won against Lille on July 8, 2023.", "corretta": True},
+    {"frase": "Marseille won against PSG on May 5, 2024.", "corretta": True},
+    {"frase": "Fiorentina won against Bologna on March 15, 2024.", "corretta": True},
+    {"frase": "PSG won against Marseille on May 5, 2024.", "corretta": True},
+    {"frase": "Bayern Munich won against Leipzig on July 25, 2023.", "corretta": True},
+    {"frase": "Napoli won against Lazio on November 10, 2023.", "corretta": True},
+    {"frase": "PSG won against Lille on August 15, 2023.", "corretta": True},
+    {"frase": "Bayern Munich won against Leipzig on October 10, 2023.", "corretta": True},
+    {"frase": "Inter won against Roma on May 15, 2023.", "corretta": True},
+    {"frase": "Bayern Munich won against Borussia Dortmund on July 30, 2024.", "corretta": True},
     
     # Frasi di Test False
-    {"frase": "Apple Inc. (AAPL): Il titolo in data 2023-03-10 era più alto rispetto alla data 2023-03-15.", "corretta": False},
-    {"frase": "Microsoft Corp. (MSFT): Il titolo in data 2023-06-21 era più basso rispetto alla data 2023-06-20.", "corretta": False},
-    {"frase": "Amazon.com Inc. (AMZN): Il titolo in data 2022-12-05 era più basso rispetto alla data 2022-12-01.", "corretta": False},
-    {"frase": "Tesla Inc. (TSLA): Il titolo in data 2022-09-12 era più alto rispetto alla data 2022-09-14.", "corretta": False},
-    {"frase": "Alphabet Inc. (GOOGL): Il titolo in data 2023-02-18 era più alto rispetto alla data 2023-02-20.", "corretta": False},
-    {"frase": "Meta Platforms Inc. (META): Il titolo in data 2023-01-18 era più basso rispetto alla data 2023-01-15.", "corretta": False},
-    {"frase": "Apple Inc. (AAPL): Il titolo in data 2022-11-25 era più basso rispetto alla data 2022-11-22.", "corretta": False},
-    {"frase": "Microsoft Corp. (MSFT): Il titolo in data 2022-07-08 era più alto rispetto alla data 2022-07-10.", "corretta": False},
-    {"frase": "Amazon.com Inc. (AMZN): Il titolo in data 2023-04-15 era più basso rispetto alla data 2023-04-12.", "corretta": False},
-    {"frase": "Tesla Inc. (TSLA): Il titolo in data 2022-09-28 era più alto rispetto alla data 2022-10-01.", "corretta": False},
-    {"frase": "Alphabet Inc. (GOOGL): Il titolo in data 2022-08-31 era più basso rispetto alla data 2022-08-30.", "corretta": False},
-    {"frase": "Meta Platforms Inc. (META): Il titolo in data 2023-04-28 era più alto rispetto alla data 2023-05-01.", "corretta": False},
-    {"frase": "Apple Inc. (AAPL): Il titolo in data 2022-06-20 era più basso rispetto alla data 2022-06-18.", "corretta": False},
-    {"frase": "Microsoft Corp. (MSFT): Il titolo in data 2023-03-03 era più alto rispetto alla data 2023-03-05.", "corretta": False},
-    {"frase": "Amazon.com Inc. (AMZN): Il titolo in data 2022-12-01 era più basso rispetto alla data 2022-11-30.", "corretta": False}
+    {"frase": "Barcelona won against Real Madrid on August 15, 2023.", "corretta": False},
+    {"frase": "Roma won against Juventus on December 15, 2023.", "corretta": False},
+    {"frase": "Manchester City won against Chelsea on October 30, 2023.", "corretta": False},
+    {"frase": "Manchester City won against Liverpool on August 8, 2023.", "corretta": False},
+    {"frase": "Fiorentina won against Torino on February 8, 2024.", "corretta": False},
+    {"frase": "Real Madrid won against Barcelona on June 10, 2023.", "corretta": False},
+    {"frase": "Barcelona won against Atletico Madrid on April 25, 2024.", "corretta": False},
+    {"frase": "Borussia Dortmund won against Leipzig on October 30, 2024.", "corretta": False},
+    {"frase": "Inter won against Fiorentina on April 15, 2023.", "corretta": False},
+    {"frase": "Milan won against Napoli on February 8, 2024.", "corretta": False},
+    {"frase": "Napoli won against Fiorentina on June 30, 2023.", "corretta": False},
+    {"frase": "Milan won against Napoli on July 8, 2023.", "corretta": False},
+    {"frase": "Liverpool won against Manchester United on December 15, 2023.", "corretta": False},
+    {"frase": "Chelsea won against Manchester United on October 30, 2023.", "corretta": False},
+    {"frase": "Arsenal won against Tottenham on January 10, 2024.", "corretta": False},
+    {"frase": "Chelsea won against Tottenham on August 8, 2024.", "corretta": False}
 ]
-
 
 # Funzione per salvare i risultati di una singola risposta
 def save_single_response(participant_id, email, frase, risposta, feedback):
