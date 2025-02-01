@@ -7,6 +7,8 @@ from gspread.exceptions import APIError, GSpreadException
 import time
 from datetime import datetime
 import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 
 # Funzione per l'inizializzazione e autenticazione di Google Sheets
 def init_google_sheet():
@@ -103,6 +105,13 @@ def save_single_response(participant_id, email, frase, risposta, feedback):
         except APIError:
             st.error("Si è verificato un problema durante il salvataggio dei dati. Riprova più tardi.")
 
+# Funzione LMSR per il calcolo delle probabilità
+def lmsr_probability(yes_count, no_count, b=1):
+    yes_score = np.exp(yes_count / b)
+    no_score = np.exp(no_count / b)
+    total_score = yes_score + no_score
+    return yes_score / total_score, no_score / total_score
+
 # Funzione principale dell'app
 def main():
     st.title("Test di Valutazione a intuito di Frasi Nascoste")
@@ -130,12 +139,8 @@ def main():
             unsafe_allow_html=True
         )
         
-        st.markdown(
-            "Rispondi alla prossima domanda seguendo il tuo intuito.<br>La frase nascosta dietro al rettangolo nero qui sopra è vera o falsa?", 
-            unsafe_allow_html=True
-        )
         risposta = st.radio(
-            "Seleziona la tua risposta:", 
+            "Rispondi alla prossima domanda seguendo il tuo intuito.\nLa frase nascosta dietro al rettangolo nero qui sopra è vera o falsa?", 
             ("Seleziona", "Vera", "Falsa"), 
             index=0, 
             key=f"response_{st.session_state.current_index}",
@@ -163,9 +168,34 @@ def main():
             if st.session_state.current_index >= len(st.session_state.all_phrases):
                 st.write("Test completato!")
                 st.write(f"Risposte corrette (test): {st.session_state.total_correct} su {len(test_phrases)}")
-                st.stop()  # Termina l'applicazione
+                
+                show_aggregated_prediction_market()
+                st.stop()
             else:
                 st.experimental_rerun()
+
+# Funzione per mostrare i grafici di prediction market
+def show_aggregated_prediction_market():
+    sheet = st.session_state.sheet
+    if sheet is not None:
+        df = load_sheet_data(sheet)
+        if df is not None and not df.empty:
+            for phrase in target_phrases:
+                phrase_text = phrase["frase"]
+                yes_count = len(df[(df["frase"] == phrase_text) & (df["risposta"] == "Vera")])
+                no_count = len(df[(df["frase"] == phrase_text) & (df["risposta"] == "Falsa")])
+                
+                # Calcola le probabilità LMSR
+                yes_prob, no_prob = lmsr_probability(yes_count, no_count)
+
+                # Creazione del grafico
+                fig, ax = plt.subplots()
+                ax.bar(["Vera", "Falsa"], [yes_prob * 100, no_prob * 100])
+                ax.set_title(f"Prediction Market - {phrase_text}")
+                ax.set_ylabel("Probabilità (%)")
+                st.pyplot(fig)
+        else:
+            st.warning("Non sono disponibili dati sufficienti per generare i grafici di prediction market.")
 
 if __name__ == "__main__":
     main()
