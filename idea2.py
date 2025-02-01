@@ -131,48 +131,48 @@ def main():
         st.experimental_rerun()
 
     if "all_phrases" in st.session_state:
-    current_phrase = st.session_state.all_phrases[st.session_state.current_index]
-    
-    st.markdown(
-        "<div style='width: 100%; height: 80px; background-color: black; color: black; text-align: center;'>"
-        "Testo Nascosto Dietro il Pannello Nero</div>",
-        unsafe_allow_html=True
-    )
-    
-    risposta = st.radio(
-        "Rispondi alla prossima domanda seguendo il tuo intuito.\nLa frase nascosta dietro al rettangolo nero qui sopra è vera o falsa?", 
-        ("Seleziona", "Vera", "Falsa"), 
-        index=0, 
-        key=f"response_{st.session_state.current_index}",
-        disabled=st.session_state.response_locked
-    )
-    
-    if st.button("Conferma") and not st.session_state.response_locked:
-        st.session_state.response_locked = True
-
-        if "corretta" in current_phrase:
-            is_correct = (risposta == "Vera") == current_phrase["corretta"]
-            feedback = "Giusto" if is_correct else "Sbagliato"
-            if is_correct:
-                st.session_state.total_correct += 1
-        else:
-            feedback = current_phrase["feedback"]
-
-        save_single_response(st.session_state.participant_id, st.session_state.email, current_phrase["frase"], risposta, feedback)
+        current_phrase = st.session_state.all_phrases[st.session_state.current_index]
         
-        st.write(feedback)
-        time.sleep(2)
-        st.session_state.current_index += 1
-        st.session_state.response_locked = False
+        st.markdown(
+            "<div style='width: 100%; height: 80px; background-color: black; color: black; text-align: center;'>"
+            "Testo Nascosto Dietro il Pannello Nero</div>",
+            unsafe_allow_html=True
+        )
+        
+        risposta = st.radio(
+            "Rispondi alla prossima domanda seguendo il tuo intuito.\nLa frase nascosta dietro al rettangolo nero qui sopra è vera o falsa?", 
+            ("Seleziona", "Vera", "Falsa"), 
+            index=0, 
+            key=f"response_{st.session_state.current_index}",
+            disabled=st.session_state.response_locked
+        )
+        
+        if st.button("Conferma") and not st.session_state.response_locked:
+            st.session_state.response_locked = True
 
-        if st.session_state.current_index >= len(st.session_state.all_phrases):
-            st.write("Test completato!")
-            st.write(f"Risposte corrette (test): {st.session_state.total_correct} su {len(test_phrases)}")
+            if "corretta" in current_phrase:
+                is_correct = (risposta == "Vera") == current_phrase["corretta"]
+                feedback = "Giusto" if is_correct else "Sbagliato"
+                if is_correct:
+                    st.session_state.total_correct += 1
+            else:
+                feedback = current_phrase["feedback"]
+
+            save_single_response(st.session_state.participant_id, st.session_state.email, current_phrase["frase"], risposta, feedback)
             
-            show_aggregated_prediction_market()
-            st.stop()
-        else:
-            st.experimental_rerun()
+            st.write(feedback)
+            time.sleep(2)
+            st.session_state.current_index += 1
+            st.session_state.response_locked = False
+
+            if st.session_state.current_index >= len(st.session_state.all_phrases):
+                st.write("Test completato!")
+                st.write(f"Risposte corrette (test): {st.session_state.total_correct} su {len(test_phrases)}")
+                
+                show_aggregated_prediction_market()
+                st.stop()
+            else:
+                st.experimental_rerun()
 
 # Funzione per mostrare i grafici di prediction market
 def show_aggregated_prediction_market():
