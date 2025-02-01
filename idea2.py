@@ -63,12 +63,8 @@ control_phrases = [
 
 # Frasi di test
 test_phrases = [
-    {"frase": "Napoli won against Lazio on January 20, 2024.", "corretta": True},
-    {"frase": "Juventus won against Torino on January 5, 2023.", "corretta": True},
-    {"frase": "Inter won against Torino on January 20, 2024.", "corretta": True},
-    {"frase": "Barcelona won against Real Madrid on August 15, 2023.", "corretta": False},
-    {"frase": "Roma won against Juventus on December 15, 2023.", "corretta": False}
-    # Aggiungi altre frasi se necessario
+    {"frase": f"Test phrase {i+1} (True)", "corretta": True} if i % 2 == 0 else {"frase": f"Test phrase {i+1} (False)", "corretta": False}
+    for i in range(30)
 ]
 
 # Funzione per salvare i risultati di una singola risposta
@@ -158,6 +154,10 @@ def main():
             st.write("Test completato!")
             st.write(f"Risposte corrette (test): {st.session_state.total_correct} su {len(test_phrases)}")
             st.stop()
+
+if __name__ == "__main__":
+    main()
+
 
 if __name__ == "__main__":
     main()
