@@ -117,8 +117,8 @@ def main():
     st.title("Test di Valutazione a intuito di Frasi Nascoste")
 
     # Input per l'ID partecipante e l'email
-    participant_id = st.text_input("Inserisci il tuo ID partecipante")
-    email = st.text_input("Inserisci la tua email")
+    participant_id = st.text_input("Inserisci il tuo ID partecipante (Prolific ID)")
+    email = st.text_input("Inserisci la tua email (se vuoi ricevere i risultati dello studio)")
 
     if participant_id and email and st.button("Inizia il Test"):
         st.session_state.participant_id = participant_id
@@ -134,7 +134,7 @@ def main():
         current_phrase = st.session_state.all_phrases[st.session_state.current_index]
         
         st.markdown(
-            "<div style='width: 100%; height: 60px; background-color: black; color: black; text-align: center;'>"
+            "<div style='width: 100%; height: 80px; background-color: black; color: black; text-align: center;'>"
             "Testo Nascosto Dietro il Pannello Nero</div>",
             unsafe_allow_html=True
         )
