@@ -141,7 +141,9 @@ def main():
                 )
 
                 st.write(feedback)
-                time.sleep(2)
+                time.sleep(1)
+                st.write("Generazione di una nuova frase...")
+                time.sleep(1)
 
                 st.session_state.current_index += 1
                 st.session_state.response_locked = False
@@ -159,3 +161,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
