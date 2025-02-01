@@ -150,29 +150,29 @@ def main():
     if st.button("Conferma") and not st.session_state.response_locked:
         st.session_state.response_locked = True
 
-            if "corretta" in current_phrase:
-                is_correct = (risposta == "Vera") == current_phrase["corretta"]
-                feedback = "Giusto" if is_correct else "Sbagliato"
-                if is_correct:
-                    st.session_state.total_correct += 1
-            else:
-                feedback = current_phrase["feedback"]
+        if "corretta" in current_phrase:
+            is_correct = (risposta == "Vera") == current_phrase["corretta"]
+            feedback = "Giusto" if is_correct else "Sbagliato"
+            if is_correct:
+                st.session_state.total_correct += 1
+        else:
+            feedback = current_phrase["feedback"]
 
-            save_single_response(st.session_state.participant_id, st.session_state.email, current_phrase["frase"], risposta, feedback)
+        save_single_response(st.session_state.participant_id, st.session_state.email, current_phrase["frase"], risposta, feedback)
+        
+        st.write(feedback)
+        time.sleep(2)
+        st.session_state.current_index += 1
+        st.session_state.response_locked = False
+
+        if st.session_state.current_index >= len(st.session_state.all_phrases):
+            st.write("Test completato!")
+            st.write(f"Risposte corrette (test): {st.session_state.total_correct} su {len(test_phrases)}")
             
-            st.write(feedback)
-            time.sleep(2)
-            st.session_state.current_index += 1
-            st.session_state.response_locked = False
-
-            if st.session_state.current_index >= len(st.session_state.all_phrases):
-                st.write("Test completato!")
-                st.write(f"Risposte corrette (test): {st.session_state.total_correct} su {len(test_phrases)}")
-                
-                show_aggregated_prediction_market()
-                st.stop()
-            else:
-                st.experimental_rerun()
+            show_aggregated_prediction_market()
+            st.stop()
+        else:
+            st.experimental_rerun()
 
 # Funzione per mostrare i grafici di prediction market
 def show_aggregated_prediction_market():
