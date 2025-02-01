@@ -139,14 +139,13 @@ def main():
             unsafe_allow_html=True
         )
         
-        risposta = st.radio(
-            "Rispondi alla prossima domanda seguendo il tuo intuito. La frase nascosta dietro al rettangolo nero qui sopra è vera o falsa?", 
-            ("Seleziona", "Vera", "Falsa"), 
-            index=0, 
-            key=f"response_{st.session_state.current_index}",
-            disabled=st.session_state.response_locked
-        )
-
+       risposta = st.radio(
+           "Rispondi alla prossima domanda seguendo il tuo intuito.\nLa frase nascosta dietro al rettangolo nero qui sopra è vera o falsa?", 
+           ("Seleziona", "Vera", "Falsa"), 
+           index=0, 
+           key=f"response_{st.session_state.current_index}",
+           disabled=st.session_state.response_locked
+       )
         if st.button("Conferma") and not st.session_state.response_locked:
             st.session_state.response_locked = True
 
