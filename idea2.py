@@ -140,7 +140,7 @@ def main():
         )
         
         risposta = st.radio(
-            "Rispondi alla prossima domanda seguendo il tuo intuito.", 
+            "Rispondi alla prossima domanda seguendo il tuo intuito. La frase nascosta dietro al rettangolo nero qui sopra è vera o falsa?", 
             ("Seleziona", "Vera", "Falsa"), 
             index=0, 
             key=f"response_{st.session_state.current_index}",
