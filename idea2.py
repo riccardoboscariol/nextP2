@@ -98,7 +98,7 @@ def main():
 
     # Input per l'ID partecipante e l'email
     participant_id = st.text_input("Enter your participant ID (Prolific ID)")
-    email = st.text_input("Enter your email (if you want to receive the study results)")
+    email = st.text_input("Enter your email (if you wish to receive the results of the study, otherwise write “no”.)")
 
     if participant_id and email and st.button("Start the Test"):
         st.session_state.participant_id = participant_id
