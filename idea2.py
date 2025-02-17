@@ -62,8 +62,6 @@ def load_sheet_data(sheet, max_retries=3):
 
 # Definizione delle frasi
 
-
-
 # Frasi target e di controllo
 target_phrases = [
     {"frase": "On February 18, 2025, in the Champions League football match Atalanta vs. Club Brugge, Atalanta will win the match.", "feedback": "We do not know if this statement is true or false."},
@@ -77,13 +75,38 @@ control_phrases = [
     {"frase": "On February 19, 2025, in the Champions League football match Real Madrid vs. Manchester City, Real Madrid will lose the match.", "feedback": "We do not know if this statement is true or false."}
 ]
 
-
-
-
 # Frasi di test
 test_phrases = [
-    {"frase": f"Test phrase {i+1} (True)", "corretta": True} if i % 2 == 0 else {"frase": f"Test phrase {i+1} (False)", "corretta": False}
-    for i in range(30)
+    {"frase": "Barcelona won against Real Madrid on August 15, 2023.", "corretta": False},
+    {"frase": "Napoli won against Lazio on January 20, 2024.", "corretta": True},
+    {"frase": "Roma won against Juventus on December 15, 2023.", "corretta": False},
+    {"frase": "Juventus won against Torino on January 5, 2023.", "corretta": True},
+    {"frase": "Manchester City won against Chelsea on October 30, 2023.", "corretta": False},
+    {"frase": "Inter won against Torino on January 20, 2024.", "corretta": True},
+    {"frase": "Manchester City won against Liverpool on August 8, 2023.", "corretta": False},
+    {"frase": "Fiorentina won against Torino on February 8, 2024.", "corretta": False},
+    {"frase": "Manchester United won against Chelsea on December 30, 2023.", "corretta": True},
+    {"frase": "Real Madrid won against Barcelona on June 10, 2023.", "corretta": False},
+    {"frase": "Barcelona won against Atletico Madrid on April 25, 2024.", "corretta": False},
+    {"frase": "Borussia Dortmund won against Leipzig on October 30, 2024.", "corretta": False},
+    {"frase": "PSG won against Lille on July 8, 2023.", "corretta": True},
+    {"frase": "Marseille won against PSG on May 5, 2024.", "corretta": True},
+    {"frase": "Inter won against Fiorentina on April 15, 2023.", "corretta": False},
+    {"frase": "Milan won against Napoli on February 8, 2024.", "corretta": False},
+    {"frase": "Fiorentina won against Bologna on March 15, 2024.", "corretta": True},
+    {"frase": "Napoli won against Fiorentina on June 30, 2023.", "corretta": False},
+    {"frase": "PSG won against Marseille on May 5, 2024.", "corretta": True},
+    {"frase": "Milan won against Napoli on July 8, 2023.", "corretta": False},
+    {"frase": "Liverpool won against Manchester United on December 15, 2023.", "corretta": False},
+    {"frase": "Bayern Munich won against Leipzig on July 25, 2023.", "corretta": True},
+    {"frase": "Napoli won against Lazio on November 10, 2023.", "corretta": True},
+    {"frase": "Chelsea won against Manchester United on October 30, 2023.", "corretta": False},
+    {"frase": "PSG won against Lille on August 15, 2023.", "corretta": True},
+    {"frase": "Bayern Munich won against Leipzig on October 10, 2023.", "corretta": True},
+    {"frase": "Arsenal won against Tottenham on January 10, 2024.", "corretta": False},
+    {"frase": "Inter won against Roma on May 15, 2023.", "corretta": True},
+    {"frase": "Bayern Munich won against Borussia Dortmund on July 30, 2024.", "corretta": True},
+    {"frase": "Chelsea won against Tottenham on August 8, 2024.", "corretta": False}
 ]
 
 # Funzione per salvare i risultati di una singola risposta con riprova
@@ -182,4 +205,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
