@@ -75,10 +75,10 @@ control_phrases = [
 
 # Frasi di test
 test_phrases = [
-    {"frase": "Barcelona won against Real Madrid on August 15, 2023.", "corretta": False},
-    {"frase": "Napoli won against Lazio on January 20, 2024.", "corretta": True},
-    {"frase": "Roma won against Juventus on December 15, 2023.", "corretta": False},
-    {"frase": "Juventus won against Torino on January 5, 2023.", "corretta": True},
+    {"frase": "On 15 July 2023, the NVIDIA stock was higher than on 10 June 2023.", "corretta": True},
+    {"frase": "On 10 June 2023, the Alphabet (Google) stock was lower than on 5 May 2023.", "corretta": False},
+    {"frase": "On 20 August 2024, the Netflix stock was lower than on 15 July 2024.", "corretta": False},
+    {"frase": "On 25 April 2023, the Microsoft stock was lower than on 20 March 2023.", "corretta": False},
     {"frase": "Manchester City won against Chelsea on October 30, 2023.", "corretta": False},
     {"frase": "Inter won against Torino on January 20, 2024.", "corretta": True},
     {"frase": "Manchester City won against Liverpool on August 8, 2023.", "corretta": False},
