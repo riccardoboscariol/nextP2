@@ -163,7 +163,8 @@ def main():
                 disabled=st.session_state.response_locked
             )
 
-            if st.button("Confirm") and not st.session_state.response_locked:
+            if risposta != "Select" and st.button("Confirm") and not st.session_state.response_locked:
+
                 st.session_state.response_locked = True
 
                 if "corretta" in current_phrase:
