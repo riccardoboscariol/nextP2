@@ -60,11 +60,11 @@ def load_sheet_data(sheet, max_retries=3):
 
 # Frasi target e di controllo
 target_phrases = [
-    {"frase": "On April 1, 2025, in the Coppa Italia football match Empoli vs. Bologna, Empoli will win the match.", "feedback": "We do not know if this statement is true or false."},
+    {"frase": "On April 2, 2025, in the Coppa Italia football match Milan vs. Inter, Milan will win the match.", "feedback": "We do not know if this statement is true or false."},
 ]
 
 control_phrases = [
-    {"frase": "On April 1, 2025, in the Coppa Italia football match Empoli vs. Bologna, Empoli will lose the match.", "feedback": "We do not know if this statement is true or false."},
+    {"frase": "On April 2, 2025, in the Coppa Italia football match Milan vs. Inter, Milan will lose the match.", "feedback": "We do not know if this statement is true or false."},
 ]
 
 # Frasi di test con risposte
