@@ -60,11 +60,13 @@ def load_sheet_data(sheet, max_retries=3):
 
 # Frasi target e di controllo
 target_phrases = [
-    {"frase": "On April 2, 2025, in the Coppa Italia football match Milan vs. Inter, Milan will win the match.", "feedback": "We do not know if this statement is true or false."},
+    {"frase": "On April 9, 2025, in the Champions League football match PSG vs. Aston Villa, PSG will win the match.", "feedback": "We do not know if this statement is true or false."},
+    {"frase": "On April 9, 2025, in the Champions League football match Barcellona vs. Borussia Dortmund, Barcellona will win the match.", "feedback": "We do not know if this statement is true or false."}
 ]
 
 control_phrases = [
-    {"frase": "On April 2, 2025, in the Coppa Italia football match Milan vs. Inter, Milan will lose the match.", "feedback": "We do not know if this statement is true or false."},
+    {"frase": "On April 9, 2025, in the Champions League football match PSG vs. Aston Villa, PSG will lose the match.", "feedback": "We do not know if this statement is true or false."},
+    {"frase": "On April 9, 2025, in the Champions League football match Barcellona vs. Borussia Dortmund, Barcellona will lose the match.", "feedback": "We do not know if this statement is true or false."}
 ]
 
 # Frasi di test con risposte
@@ -105,25 +107,35 @@ test_phrases = [
     {"frase": frase, "corretta": corretta} for frase, corretta in raw_test_phrases
 ]
 
-def save_single_response(participant_id, email, frase, risposta, feedback, max_retries=3):
+def save_all_responses(participant_id, email, all_responses, completed=True):
     sheet = st.session_state.sheet
     if sheet is not None:
-        for attempt in range(max_retries):
+        for attempt in range(3):
             try:
-                sheet.append_row([participant_id, email, frase, risposta, feedback, datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
-                return
+                for response in all_responses:
+                    sheet.append_row([
+                        participant_id,
+                        email,
+                        response["frase"],
+                        response["risposta"],
+                        response["feedback"],
+                        datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                        "COMPLETED" if completed else "INCOMPLETE"
+                    ])
+                return True
             except APIError:
-                if attempt < max_retries - 1:
-                    st.warning(f"Errore durante il salvataggio. Riprova ({attempt + 1}/{max_retries})...")
+                if attempt < 2:
                     time.sleep(2)
                 else:
                     st.error("Si è verificato un problema durante il salvataggio dei dati. Riprova più tardi.")
+                    return False
+    return False
 
 def main():
     st.title("Intuitive Evaluation Test of Hidden Statements")
 
     participant_id = st.text_input("Enter your participant ID (Prolific ID)")
-    email = st.text_input("Enter your email (if you wish to receive the results of the study, otherwise write “no”.)")
+    email = st.text_input("Enter your email (if you wish to receive the results of the study, otherwise write 'no'.)")
 
     if participant_id and email and st.button("Start the Test"):
         st.session_state.participant_id = participant_id
@@ -133,6 +145,8 @@ def main():
         st.session_state.current_index = 0
         st.session_state.total_correct = 0
         st.session_state.response_locked = False
+        st.session_state.all_responses = []
+        st.session_state.start_time = datetime.now()
         st.experimental_rerun()
 
     if "all_phrases" in st.session_state:
@@ -159,7 +173,6 @@ def main():
             )
 
             if risposta != "Select" and st.button("Confirm") and not st.session_state.response_locked:
-
                 st.session_state.response_locked = True
 
                 if "corretta" in current_phrase:
@@ -170,13 +183,11 @@ def main():
                 else:
                     feedback = current_phrase["feedback"]
 
-                save_single_response(
-                    st.session_state.participant_id,
-                    st.session_state.email,
-                    current_phrase["frase"],
-                    risposta,
-                    feedback
-                )
+                st.session_state.all_responses.append({
+                    "frase": current_phrase["frase"],
+                    "risposta": risposta,
+                    "feedback": feedback
+                })
 
                 st.write(feedback)
                 time.sleep(1)
@@ -185,17 +196,41 @@ def main():
 
                 st.session_state.current_index += 1
                 st.session_state.response_locked = False
+                st.experimental_rerun()
 
-                if st.session_state.current_index >= len(st.session_state.all_phrases):
-                    st.write("Test completed!")
-                    st.write(f"Correct answers (test): {st.session_state.total_correct} out of {len(test_phrases)}")
+            if st.button("Abandon Test"):
+                if save_all_responses(
+                    st.session_state.participant_id,
+                    st.session_state.email,
+                    st.session_state.all_responses,
+                    completed=False
+                ):
+                    st.warning("Your partial responses have been saved. Thank you for your participation.")
                     st.stop()
                 else:
-                    st.experimental_rerun()
+                    st.error("Error saving partial responses. Please try again.")
+
         else:
-            st.write("Test completed!")
-            st.write(f"Correct answers (test): {st.session_state.total_correct} out of {len(test_phrases)}")
-            st.stop()
+            if save_all_responses(
+                st.session_state.participant_id,
+                st.session_state.email,
+                st.session_state.all_responses,
+                completed=True
+            ):
+                st.write("Test completed!")
+                st.write(f"Correct answers (test): {st.session_state.total_correct} out of {len(test_phrases)}")
+                
+                # Calcolo tempo impiegato
+                time_spent = datetime.now() - st.session_state.start_time
+                minutes, seconds = divmod(time_spent.total_seconds(), 60)
+                st.write(f"Time spent: {int(minutes)} minutes and {int(seconds)} seconds")
+                
+                st.stop()
+            else:
+                st.error("Error saving data. Please try again.")
+                st.session_state.current_index -= 1
+                st.session_state.response_locked = False
+                st.experimental_rerun()
 
 if __name__ == "__main__":
     main()
