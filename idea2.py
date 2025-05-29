@@ -64,7 +64,7 @@ target_phrases = [
 ]
 
 control_phrases = [
-    {"frase": "On May 31, 2025, in the Serie A football match PSG vs. Inter, Inter will win against PSG", "feedback": "We do not know if this statement is true or false."},
+    {"frase": "On May 31, 2025, in the Champions League football match PSG vs. Inter, Inter will win against PSG", "feedback": "We do not know if this statement is true or false."},
 
 ]
 
